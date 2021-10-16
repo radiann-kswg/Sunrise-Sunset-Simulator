@@ -13,7 +13,7 @@ public class SimulatorTester : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _SetSunRotation(true);
+        _SetSunRotation();
     }
 
     // Update is called once per frame
@@ -22,11 +22,9 @@ public class SimulatorTester : MonoBehaviour
         _SetSunRotation();
     }
 
-    private void _SetSunRotation(bool setLatitude = false)
+    private void _SetSunRotation()
     {
-        if (setLatitude) srg.Latitude_byDeg = latitude;
-        sunRotation = srg.ReturnSunRotation();
-        if(target) target.transform.rotation = sunRotation;
-        else gameObject.transform.rotation = sunRotation;
+        if (target) target.transform.LookAt(srg.ReturnSunRotation(latitude));
+        else gameObject.transform.LookAt(srg.ReturnSunRotation(latitude));
     }
 }
