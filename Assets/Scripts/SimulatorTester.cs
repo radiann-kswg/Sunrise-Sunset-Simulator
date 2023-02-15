@@ -24,7 +24,7 @@ public class SimulatorTester : MonoBehaviour
 
     private void _SetSunRotation()
     {
-        if (target) target.transform.LookAt(srg.ReturnSunRotation(latitude));
-        else gameObject.transform.LookAt(srg.ReturnSunRotation(latitude));
+        if (target) target.transform.LookAt(srg.ReturnSunRotation(System.DateTime.Now, latitude));
+        else gameObject.transform.LookAt(srg.ReturnSunRotation(System.DateTime.Now, latitude));
     }
 }
