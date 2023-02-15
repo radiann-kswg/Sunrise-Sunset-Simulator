@@ -5,9 +5,9 @@ using System;
 
 public class SunRotationGenerator
 {
-    public Vector3 ReturnSunRotation(float Latitude_byDeg = 35.0f)
+    public Vector3 ReturnSunRotation(DateTime updateTime, float Latitude_byDeg = 35.0f)
     {
-        DateTime dateTime = DateTime.Now;
+        DateTime dateTime = updateTime;
 
         var msec = dateTime.Millisecond;
         var sec = dateTime.Second;
@@ -43,7 +43,7 @@ public class SunRotationGenerator
         //double theta = Math.Acos((Math.Sin(HEIGHT_ANGLE) - Math.Sin(Latitude) * Math.Sin(beta)) / Math.Cos(Latitude) * Math.Cos(beta));
         double theta = (hour_d - 0.5) * REV2RAD;
 
-        Vector3 sunAngle = Vector3.forward * (float)Math.Sin(beta) + (float)Math.Cos(beta) * (Vector3.up * (float)Math.Cos(theta) - Vector3.right * (float)Math.Sin(theta));
+        Vector3 sunAngle = Vector3.up * (float)Math.Sin(beta) + (float)Math.Cos(beta) * (Vector3.forward * (float)Math.Cos(theta) - Vector3.right * (float)Math.Sin(theta));
         Quaternion sunDiff = Quaternion.Euler(Latitude_byDeg, 0, 0);
 
         /*
