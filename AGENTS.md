@@ -15,7 +15,7 @@
 | `Scripts/ClockDirecter.cs` | 時計表示（TMP）。`clock` に SimulatorTester を繋ぐとその時刻、未指定なら PC 時刻 |
 | `Scripts/SunPositionHUD.cs` | 高度・方位・8 方位の表示 `El:  +45.2  Az: 178.3 S` |
 | `Tests/Editor/SunRotationGeneratorTests.cs` | EditMode テスト。参照値は Python `astral` 3.2 で出した東京の四季（許容 0.5°）。asmdef 無し＝Editor アセンブリ |
-| `Scenes/SampleScene.unity` | 動作確認シーン（`Assets/Realtime GI Lighting.lighting` を使用）。中央の球は `Materials/Earth.mat`（`Textures/Earth_BlueMarble.png` = NASA Blue Marble NG を 2048×1024 に縮小・パブリックドメイン） |
+| `Scenes/SampleScene.unity` | 動作確認シーン（`Assets/Realtime GI Lighting.lighting` を使用）。画面下の地球儀 `Sphere`（scale 5.2・y=-2.5）は `Materials/Earth.mat`（`Textures/Earth_BlueMarble.png` = NASA Blue Marble NG を 2048×1024 に縮小・パブリックドメイン。夜側用に弱い Emission）。**向きは観測地が天頂 +Y・観測地の北が +Z**（`Quaternion.Inverse(LookRotation(北接線, 天頂))`。Unity 標準球は u=0.5 が +X で u 増加＝+Z 回り）、子 `ObserverMarker`（Unlit 赤・観測地の位置）。カメラは (0, 0.9, -5.2)・X 9° 見下ろし。観測地を変えたら地球儀の回転とマーカーも直す（2026-09-26 の `Temp/evals/layout.cs` / `marker.cs` 相当の処理） |
 | `Assets/RadianN/Other Productions/Fonts/PenchantManufacture/` | サブモジュール `PenchantManufacture_ImageAssets/assets/fonts/` からのコピー＋TMP SDF（Dynamic・ASCII 事前登録）。数字系（時計・太陽位置）に使う。**CJK 未収録** |
 | `Assets/RadianN/Other Productions/Fonts/x0y0pxFreeFont/` | サブモジュール `hicchicc.github.io/00ff/` からのコピー＋TMP SDF。**かなのみで漢字は無い**（`太陽高度方位` は欠字）。2026-09-26 に User が見出しも Penchant に変えたので同梱のみ（シーンでは未使用） |
 | `PenchantManufacture_ImageAssets/` / `hicchicc.github.io/` | **git サブモジュール**（フォントの正本。ライセンスは各リポジトリ／配布サイト。clone 後 `git submodule update --init`） |

@@ -9,6 +9,7 @@ A Unity project that computes the sun's elevation and azimuth from date/time and
 <p align="center">
   <img src="Docs/images/daycycle.gif" alt="疑似時計 3600 倍で 1 日を回したところ（東京・夏至）" width="70%">
 </p>
+<p align="center"><sub>画面下の地球儀は観測地（赤い点＝東京）が天頂に来る向きで置いてあり、Directional Light の当たり方＝その場所の昼夜がそのまま地球儀の明暗になる。</sub></p>
 <p align="center">
   <img src="Docs/images/morning.png" alt="朝（太陽は東）" width="48%">
   <img src="Docs/images/dusk.png" alt="日没後" width="48%">
@@ -35,8 +36,8 @@ A Unity project that computes the sun's elevation and azimuth from date/time and
 | `Scripts/ClockDirecter.cs` | 時計表示 |
 | `Scripts/SunPositionHUD.cs` | 高度・方位・8 方位の表示（`El:  +45.2  Az: 178.3 S`） |
 | `Tests/Editor/SunRotationGeneratorTests.cs` | 東京の四季の参照値（Python `astral`）と 0.5° 以内で一致することを確認する EditMode テスト |
-| `Scenes/SampleScene.unity` | サンプル（Procedural Skybox＋Directional Light＋地球儀） |
-| `Textures/Earth_BlueMarble.png` / `Materials/Earth.mat` | 球に貼った地球のテクスチャ（NASA Blue Marble: Next Generation、2048×1024） |
+| `Scenes/SampleScene.unity` | サンプル。Procedural Skybox＋Directional Light＋地球儀（`Sphere`）。地球儀は観測地が天頂（+Y）・観測地の北が +Z になる向きで置き、子の `ObserverMarker`（赤い点）が観測地 |
+| `Textures/Earth_BlueMarble.png` / `Materials/Earth.mat` / `Materials/ObserverMarker.mat` | 地球儀のテクスチャ（NASA Blue Marble: Next Generation、2048×1024）とマテリアル。夜側が真っ黒にならないよう弱い Emission を入れてある |
 
 （いずれも `Assets/RadianN/Products/Realtime SunSim/` 配下）
 
@@ -60,7 +61,7 @@ var (el, az) = SunRotationGenerator.SunPosition(DateTime.Now, 35.69, 139.69, 9);
 light.transform.rotation = SunRotationGenerator.SunLightRotation(el, az);
 ```
 
-座標系は +Z = 北・+X = 東・+Y = 上、方位は北 0°・東 90°。
+座標系は +Z = 北・+X = 東・+Y = 上、方位は北 0°・東 90°。観測地を変えたら、地球儀の向きとマーカー位置も合わせて回してください（`SimulatorTester` の緯度経度から `Quaternion.Inverse(Quaternion.LookRotation(北方向, 天頂方向))` で求まります。Unity 標準球はテクスチャの u=0.5 が +X、u が増えると +Z 側）。
 
 ---
 
