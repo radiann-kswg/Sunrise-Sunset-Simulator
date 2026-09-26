@@ -1,0 +1,6 @@
+[submodule "PenchantManufacture_ImageAssets"]
+	path = PenchantManufacture_ImageAssets
+	url = https://github.com/radiann-kswg/PenchantManufacture_ImageAssets.git
+[submodule "hicchicc.github.io"]
+	path = hicchicc.github.io
+	url = https://github.com/hicchicc/hicchicc.github.io.git

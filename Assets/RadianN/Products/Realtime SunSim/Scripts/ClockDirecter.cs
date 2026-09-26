@@ -1,65 +1,41 @@
-using System.Collections;
-using System.Collections.Generic;
+ï»¿using System;
 using UnityEngine;
-using UnityEngine.UI;
-using System;
+using TMPro;
 
-
+/// <summary>
+/// æ™‚è¨ˆè¡¨ç¤ºã€‚SimulatorTester ãŒã‚ã‚Œã°ãã®æ™‚åˆ»ã€ç„¡ã‘ã‚Œã° PC ã®ç¾åœ¨æ™‚åˆ»ã‚’åˆ†å˜ä½ã§è¡¨ç¤ºã™ã‚‹ã€‚
+/// </summary>
 public class ClockDirecter : MonoBehaviour
 {
-    #region private•Ï”’è‹`
-    private DateTime dateTime;
-    private int month, dayM, hour, min;
-    private string[] monthStr = {"Jan.", "Feb.", "Mar.", "Apr.", "May.", "Jun.",
-        "Jul.", "Aug.", "Sep.", "Oct.", "Nov.", "Dec."};
-    #endregion
+    static readonly string[] MonthStr = { "Jan.", "Feb.", "Mar.", "Apr.", "May.", "Jun.", "Jul.", "Aug.", "Sep.", "Oct.", "Nov.", "Dec." };
 
-    [Header("‚Æ“ú•t‚ğ•ÊX‚Å•\¦‚·‚éText")]
-    /// <summary>
-    /// ‚Ì‚İ‚ğ•\¦‚·‚éText
-    /// </summary>
-    public Text timeText;
-    /// <summary>
-    /// “ú•t‚Ì‚İ‚ğ•\¦‚·‚éText
-    /// </summary>
-    public Text dateText;
-    [Header("‚Æ“ú•t‚Ì—¼•û‚ğ•\¦‚·‚éText")]
-    /// <summary>
-    /// ‚Æ“ú•t‚Ì—¼•û‚ğ•\¦‚·‚éText
-    /// </summary>
-    public Text fullClockText;
+    [Tooltip("æ™‚åˆ»ã®å‡ºã©ã“ã‚ï¼ˆæœªæŒ‡å®šãªã‚‰ DateTime.Nowï¼‰")]
+    [SerializeField] SimulatorTester clock;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        UpdateClockDirecter();
-    }
+    [Header("æ™‚åˆ»ã¨æ—¥ä»˜ã‚’åˆ¥ã€…ã§è¡¨ç¤ºã™ã‚‹Text")]
+    /// <summary>æ™‚åˆ»ã®ã¿ã‚’è¡¨ç¤ºã™ã‚‹Text</summary>
+    public TMP_Text timeText;
+    /// <summary>æ—¥ä»˜ã®ã¿ã‚’è¡¨ç¤ºã™ã‚‹Text</summary>
+    public TMP_Text dateText;
 
-    // Update is called once per frame
+    [Header("æ™‚åˆ»ã¨æ—¥ä»˜ã®ä¸¡æ–¹ã‚’è¡¨ç¤ºã™ã‚‹Text")]
+    /// <summary>æ™‚åˆ»ã¨æ—¥ä»˜ã®ä¸¡æ–¹ã‚’è¡¨ç¤ºã™ã‚‹Text</summary>
+    public TMP_Text fullClockText;
+
+    DateTime _shown = DateTime.MinValue;
+
     void Update()
     {
-        dateTime = DateTime.Now;
-        if (min != dateTime.Minute)
-        {
-            UpdateClockDirecter();
-        }
+        DateTime now = clock ? clock.CurrentTime : DateTime.Now;
+        if (now.Minute == _shown.Minute && now.Hour == _shown.Hour && now.Day == _shown.Day) return;
+        _shown = now;
+        if (timeText) timeText.text = FormatTime(now);
+        if (dateText) dateText.text = FormatDate(now);
+        if (fullClockText) fullClockText.text = FormatTime(now) + "  " + FormatDate(now);
     }
 
-    private void UpdateClockDirecter()
-    {
-        month = dateTime.Month;
-        dayM = dateTime.Day;
-        hour = dateTime.Hour;
-        min = dateTime.Minute;
-
-        if (timeText && dateText)
-        {
-            timeText.text = string.Format("{0,2} : {1,2:00}", hour, min);
-            dateText.text = string.Format("{0,4} {1,2}", monthStr[month - 1], dayM);
-        }
-        if (fullClockText)
-        {
-            fullClockText.text = string.Format("{0,2} : {1,2:00}\t {2,4} {3,2}", hour, min, monthStr[month - 1], dayM);
-        }
-    }
+    /// <summary>" 9 : 05" ã®ã‚ˆã†ãªæ™‚åˆ»è¡¨ç¤º</summary>
+    public static string FormatTime(DateTime t) => string.Format("{0,2} : {1,2:00}", t.Hour, t.Minute);
+    /// <summary>"Sep. 26" ã®ã‚ˆã†ãªæ—¥ä»˜è¡¨ç¤º</summary>
+    public static string FormatDate(DateTime t) => string.Format("{0,4} {1,2}", MonthStr[t.Month - 1], t.Day);
 }
