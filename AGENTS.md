@@ -21,11 +21,12 @@
 | `Assets/RadianN/Other Productions/Fonts/x0y0pxFreeFont/` | サブモジュール `hicchicc.github.io/00ff/` からのコピー＋TMP SDF。見出し用。**かなのみで漢字は無い**（`太陽高度方位` は欠字） |
 | `PenchantManufacture_ImageAssets/` / `hicchicc.github.io/` | **git サブモジュール**（フォントの正本。ライセンスは各リポジトリ／配布サイト。clone 後 `git submodule update --init`） |
 | `Assets/TextMesh Pro/` | TMP Essential Resources |
+| `Assets/Settings/` | URP アセット・レンダラー・Global Settings・DefaultVolumeProfile |
 | `Assets/Editor/GitTools.cs` | `Tools > Git Commit All` / `GitTools.RunGit(...)`（他リポジトリと同一ファイル） |
 
 ## 2. 技術スタック
 
-- Unity **6000.3.23f1**（Unity 6.3 LTS）・Built-in Render Pipeline（URP 化しない）・uGUI 2.0（TMP 同梱。シーンの Text は 2026-09-26 に TMP へ置換済み）
+- Unity **6000.3.23f1**（Unity 6.3 LTS）・**URP 17.3.0**（2026-09-26 に Built-in から移行。`Assets/Settings/URP_Asset` を Graphics と全 Quality に割当・Soft Shadows 有効。PPv2・ベイク・プローブは元から無し。Procedural Skybox と Enlighten Realtime GI の設定はそのまま）・uGUI 2.0（TMP 同梱。シーンの Text は 2026-09-26 に TMP へ置換済み）
 - 追加パッケージ（User 導入）: `com.unity.ai.assistant`（Unity 純正 MCP リレー）、`com.unity.ai.inference`、`com.unity.recorder` 5.1.7（日照の早回し動画用。Editor クラッシュの前例あり）
 - `com.unity.pipeline` 0.6.0-exp.1（Unity CLI `unity command …` 用）
 - ブランチ `main`・リモート `ous-radian-n/Sunrise-Sunset-Simulator`（他リポジトリと違い `radiann-kswg` ではない）
